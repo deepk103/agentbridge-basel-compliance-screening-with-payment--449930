@@ -1,0 +1,321 @@
+{
+  "id": "tpl-535090434",
+  "name": "Basel Compliance Screening with Payment Hub",
+  "description": "Basel Compliance Screening with Payment Hub books trades and settles customer profiles; applies decision gates and observability; orchestrates via CRM to lower chargebacks.",
+  "industry": "Banking & Finance",
+  "pattern": "Iterative-Improve",
+  "complexity": "Advanced",
+  "rating": 4.8,
+  "downloads": 36980,
+  "favorites": 5210,
+  "executionTime": "18 min",
+  "tags": [
+    "aml",
+    "credit",
+    "iterative-improve",
+    "banking"
+  ],
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Transfer Intake",
+      "description": "Collect, validate and normalize statements from Core Banking; attach a runId and timestamp for traceability."
+    },
+    {
+      "id": "propose-0",
+      "name": "Propose",
+      "description": "Execute propose phase for the Iterative-Improve pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "improve-1",
+      "name": "Improve",
+      "description": "Execute improve phase for the Iterative-Improve pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "portfolio-check-0",
+      "name": "Portfolio Check",
+      "description": "Portfolio Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "limit-control-1",
+      "name": "Limit Control",
+      "description": "Limit Control across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "settlement-2",
+      "name": "Settlement",
+      "description": "Settlement across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "finalize",
+      "name": "Reconciliation Summary",
+      "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to SWIFT Gateway; return response JSON for the client."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "agentbridge",
+      "data": {
+        "label": "Transfer Intake",
+        "description": "Collect, validate and normalize statements from Core Banking; attach a runId and timestamp for traceability.",
+        "nodeType": "input",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 60,
+        "y": 120
+      }
+    },
+    {
+      "id": "propose-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Propose",
+        "description": "Execute propose phase for the Iterative-Improve pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 310,
+        "y": 120
+      }
+    },
+    {
+      "id": "improve-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Improve",
+        "description": "Execute improve phase for the Iterative-Improve pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 560,
+        "y": 120
+      }
+    },
+    {
+      "id": "portfolio-check-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Portfolio Check",
+        "description": "Portfolio Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 810,
+        "y": 120
+      }
+    },
+    {
+      "id": "limit-control-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Limit Control",
+        "description": "Limit Control across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1060,
+        "y": 120
+      }
+    },
+    {
+      "id": "settlement-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "Settlement",
+        "description": "Settlement across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1310,
+        "y": 120
+      }
+    },
+    {
+      "id": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "Reconciliation Summary",
+        "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to SWIFT Gateway; return response JSON for the client.",
+        "nodeType": "output",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1560,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "intake",
+      "target": "propose-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-1",
+      "source": "propose-0",
+      "target": "improve-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-2",
+      "source": "improve-1",
+      "target": "portfolio-check-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-3",
+      "source": "portfolio-check-0",
+      "target": "limit-control-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-4",
+      "source": "limit-control-1",
+      "target": "settlement-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-5",
+      "source": "settlement-2",
+      "target": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    }
+  ],
+  "preview": "Transfer Intake → Propose → Improve → Portfolio Check → Limit Control → Settlement → Reconciliation Summary",
+  "featured": true,
+  "createdAt": "2025-05-04T14:18:37.634Z",
+  "author": "AgentBridge Team",
+  "deployments": 3710,
+  "lastDeployed": "2026-04-03T07:49:40.578Z",
+  "configuration": {
+    "provider": "gcp",
+    "region": "us-west-2",
+    "compute": "gpu-single"
+  },
+  "healthStatus": "healthy",
+  "deploymentCount": 1861,
+  "githubRepo": "https://github.com/agentbridge/basel-compliance-screening-with-payment-hub",
+  "maintainer": "AgentBridge Team",
+  "agenticLayers": {
+    "reasoning": {
+      "modelType": "gpt-4o",
+      "reasoningPattern": "ReAct",
+      "contextWindow": 128000,
+      "memorySystem": "hybrid",
+      "decisionFramework": "Multi-Criteria Decision Analysis"
+    },
+    "orchestration": {
+      "workflowEngine": "n8n",
+      "coordinationPattern": "centralized",
+      "failoverStrategy": "retry",
+      "loadBalancing": "intelligent"
+    },
+    "protocol": {
+      "communicationProtocol": "MCP",
+      "messageFormat": "JSON",
+      "authenticationMethod": "OAuth2",
+      "encryptionStandard": "AES-256"
+    },
+    "governance": {
+      "policyEngine": "OPA",
+      "complianceStandards": [
+        "SOC2",
+        "GDPR"
+      ],
+      "auditTrail": true,
+      "riskAssessment": "medium",
+      "dataClassification": "internal"
+    },
+    "observability": {
+      "metricsCollection": "Prometheus",
+      "loggingFramework": "ELK",
+      "tracingSystem": "Jaeger",
+      "alertingRules": [],
+      "dashboardConfig": {
+        "layout": "grid",
+        "widgets": [
+          "metrics",
+          "logs",
+          "traces"
+        ],
+        "refreshInterval": 30
+      }
+    },
+    "intelligence": {
+      "learningCapability": "online",
+      "knowledgeBase": "vector-db",
+      "adaptationMechanism": "ml-based",
+      "performanceOptimization": "ai-driven"
+    }
+  },
+  "businessFunction": "data-preparation-node",
+  "autonomyLevel": "semi-autonomous",
+  "cognitiveCapabilities": [
+    {
+      "name": "Pattern Recognition",
+      "description": "Identifies patterns in business processes",
+      "confidenceLevel": 0.85,
+      "lastUpdated": "2026-04-14T14:18:37.689Z"
+    }
+  ],
+  "roiMetrics": {
+    "costSavings": 11917,
+    "timeReduction": 87,
+    "accuracyImprovement": 21,
+    "throughputIncrease": 26,
+    "errorReduction": 26
+  },
+  "complianceFramework": {
+    "standards": [
+      "SOC2",
+      "GDPR",
+      "ISO27001"
+    ],
+    "certifications": [
+      "SOC2 Type II"
+    ],
+    "auditFrequency": "monthly",
+    "lastAudit": "2026-03-03T23:38:41.507Z"
+  },
+  "scalingPolicy": {
+    "minInstances": 1,
+    "maxInstances": 10,
+    "scaleUpThreshold": 80,
+    "scaleDownThreshold": 20,
+    "cooldownPeriod": 300
+  }
+}
